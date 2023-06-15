@@ -44,7 +44,14 @@ class RakBukuController extends Controller
         $validated = $request->validate([
             'nama'=> 'required |max:50',
             'lokasi'=> 'required |max:50'
+        ],[
+            'nama.required' => 'Nama Wajib Diisi',
+            'nama.max' => 'Nama Tidak Boleh Lebih Dari 50 Karakter',
+            'lokasi.required' => 'Lokasi Wajib Diisi',
+            'lokasi.max' => 'Loaksi Tidak Boleh Lebih Dari 50 Karakter',
+
         ]);
+
         if ($validated){
             $request->session()->put('rak', $rak);
             $rak->save();
@@ -80,6 +87,11 @@ class RakBukuController extends Controller
         $validated = $request->validate([
             'nama'=> 'required |max:50',
             'lokasi'=> 'required |max:50'
+        ],[
+            'nama.required' => 'Nama Wajib Diisi',
+            'nama.max' => 'Nama Tidak Boleh Lebih Dari 50 Karakter',
+            'lokasi.required' => 'Lokasi Wajib Diisi',
+            'lokasi.max' => 'Loaksi Tidak Boleh Lebih Dari 50 Karakter',
         ]);
         if ($validated){
         
