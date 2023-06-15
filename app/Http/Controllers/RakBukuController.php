@@ -41,9 +41,15 @@ class RakBukuController extends Controller
         $rak->nama = $request->input('nama');
         $rak->lokasi = $request->input('lokasi');
         $rak->keterangan = $request->input('keterangan');
-        $request->session()->put('rak', $rak);
-        $rak->save();
-        $request->session()->flash('pesan', 'Data telah berhasil tersimpan.');
+        $validated = $request->validate([
+            'nama'=> 'required |max:50',
+            'lokasi'=> 'required |max:50'
+        ]);
+        if ($validated){
+            $request->session()->put('rak', $rak);
+            $rak->save();
+            $request->session()->flash('pesan', 'Data telah berhasil tersimpan.');
+        }
         return redirect('/rak_buku');
     }
     /**
@@ -71,9 +77,15 @@ class RakBukuController extends Controller
         $rakBuku->nama = $request->input('nama');
         $rakBuku->lokasi = $request->input('lokasi');
         $rakBuku->keterangan = $request->input('keterangan');
+        $validated = $request->validate([
+            'nama'=> 'required |max:50',
+            'lokasi'=> 'required |max:50'
+        ]);
+        if ($validated){
+        
         $rakBuku->save();
         $request->session()->flash('pesan', 'Data telah berhasil diubah.');
-
+        }
         return redirect('/rak_buku');
     }
     /**
