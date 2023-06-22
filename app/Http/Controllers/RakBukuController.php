@@ -57,7 +57,7 @@ class RakBukuController extends Controller
             $rak->save();
             $request->session()->flash('pesan', 'Data telah berhasil tersimpan.');
         }
-        return redirect('/rak_buku');
+        return redirect('/dashboard');
     }
     /**
      * Display the specified resource.
