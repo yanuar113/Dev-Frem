@@ -57,3 +57,6 @@ Route::controller(LoginRegisterController::class)->group(function() {
     Route::post('/logout', 'logout')->name('logout');
     });
     
+    Route::post('/rak_buku/ajax_store',[RakBukuController::class,
+    'store_ajax']);
+    

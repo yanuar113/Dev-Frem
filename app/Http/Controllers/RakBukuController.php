@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RakBuku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class RakBukuController extends Controller
 {
@@ -29,7 +30,7 @@ class RakBukuController extends Controller
     {
         $data['store'] = 'Input';
         $data['rak'] = new RakBuku();
-        $data['action'] = url('rak_buku');
+        $data['action'] = url('rak_buku/ajax_store');
         return view('rak_buku.form', $data);
     }
     /**
@@ -100,6 +101,31 @@ class RakBukuController extends Controller
         }
         return redirect('/rak_buku');
     }
+    public function store_ajax(Request $request)
+        {
+            $rak = new RakBuku();
+            $rak->nama = $request->input('nama');
+            $rak->lokasi = $request->input('lokasi');
+            $rak->keterangan = $request->input('keterangan');
+            $validated = $request->validate([
+                'nama'=> 'required |max:50',
+                'lokasi'=> 'required |max:50'
+            ],[
+                'nama.required' => 'Nama Wajib Diisi',
+                'nama.max' => 'Nama Tidak Boleh Lebih Dari 50 Karakter',
+                'lokasi.required' => 'Lokasi Wajib Diisi',
+                'lokasi.max' => 'Loaksi Tidak Boleh Lebih Dari 50 Karakter',
+    
+            ]);
+    
+            if ($validated){
+                $request->session()->put('rak', $rak);
+                $rak->save();
+                $request->session()->flash('pesan', 'Data telah berhasil tersimpan.');
+            }
+            $json = Response::json($rak);
+            return $json;
+        }
     /**
      * Remove the specified resource from storage.
      */
